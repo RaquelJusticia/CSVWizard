@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Linq;
 
 namespace CSVWizard.IO.UnitTests
@@ -49,40 +46,6 @@ namespace CSVWizard.IO.UnitTests
             Assert.That(result.Count(), Is.EqualTo(2));
             Assert.That(result.First(), Is.EqualTo(csvLine1));
             Assert.That(result.Skip(1).First(), Is.EqualTo(csvLine2));
-        }
-    }
-
-    public class InvalidExtensionException : Exception
-    {
-        private readonly string _extension;
-
-        public InvalidExtensionException(string extension)
-        {
-            _extension = extension;
-        }
-
-        public override string Message
-        {
-            get { return "The file does not have a CSV extension. Extension found: " + _extension; }
-        }
-    }
-
-    public class FileManager
-    {
-        public IEnumerable<string> ReadFile(string fileName)
-        {
-            var extension = Path.GetExtension(fileName);
-            if (extension != ".csv")
-            {
-                throw new InvalidExtensionException(extension);
-            }
-
-            if (!File.Exists(fileName))
-            {
-                return null;
-            }
-
-            return File.ReadAllLines(fileName);
         }
     }
 }
