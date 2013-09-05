@@ -51,9 +51,10 @@ namespace CSVWizard.IO.UnitTests
     {
         public IEnumerable<string> ReadFile(string fileName)
         {
-            if (Path.GetExtension(fileName) != ".csv")
+            var extension = Path.GetExtension(fileName);
+            if (extension != ".csv")
             {
-                throw new InvalidExtensionException(Path.GetExtension(fileName));
+                throw new InvalidExtensionException(extension);
             }
 
             if (!File.Exists(fileName))
