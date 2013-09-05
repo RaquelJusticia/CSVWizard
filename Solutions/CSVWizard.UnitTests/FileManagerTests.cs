@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using System.Linq;
+﻿using System.Linq;
+using NUnit.Framework;
 
-namespace CSVWizard.IO.UnitTests
+namespace CSVWizard.UnitTests
 {
     public class FileManagerTests
     {

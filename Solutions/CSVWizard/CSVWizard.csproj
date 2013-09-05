@@ -8,8 +8,8 @@
     <ProjectGuid>{C2B6548C-29F3-4056-815A-ED532CF687F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CSVWizard.IO</RootNamespace>
-    <AssemblyName>CSVWizard.IO</AssemblyName>
+    <RootNamespace>CSVWizard</RootNamespace>
+    <AssemblyName>CSVWizard</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

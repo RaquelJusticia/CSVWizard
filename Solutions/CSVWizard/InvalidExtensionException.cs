@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CSVWizard.IO
+namespace CSVWizard
 {
     public class InvalidExtensionException : Exception
     {

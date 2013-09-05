@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace CSVWizard.IO
+namespace CSVWizard
 {
     public class FileManager
     {

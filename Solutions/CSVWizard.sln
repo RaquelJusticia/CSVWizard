@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{EDC55D3B-6AAF-4DF0-93A2-AEFA10BEBD38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVWizard.IO.UnitTests", "CSVWizard.IO.UnitTests\CSVWizard.IO.UnitTests.csproj", "{F6CE14AC-BBBA-4D73-833D-DFF0E7E603D5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{885A4AB1-1AF1-4D1B-8556-32640056551E}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -12,7 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{885A4A
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVWizard.IO", "CSVWizard.IO\CSVWizard.IO.csproj", "{C2B6548C-29F3-4056-815A-ED532CF687F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVWizard.UnitTests", "CSVWizard.UnitTests\CSVWizard.UnitTests.csproj", "{F6CE14AC-BBBA-4D73-833D-DFF0E7E603D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVWizard", "CSVWizard\CSVWizard.csproj", "{C2B6548C-29F3-4056-815A-ED532CF687F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
