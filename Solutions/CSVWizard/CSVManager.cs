@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace CSVWizard
 {
@@ -56,6 +57,7 @@ namespace CSVWizard
                 ParseElement(element, list);
             }
             totalList.Add(list);
+            CheckNumberOfColumns(totalList, list);
         }
 
         private static void ParseElement(string element, List<object> list)
@@ -73,6 +75,14 @@ namespace CSVWizard
                 return;
             }
             list.Add(element);
+        }
+
+        private static void CheckNumberOfColumns(List<List<object>> totalList, List<object> list)
+        {
+            if (totalList.First().Count() != list.Count())
+            {
+                throw new ColumnMismatchException();
+            }
         }
     }
 }

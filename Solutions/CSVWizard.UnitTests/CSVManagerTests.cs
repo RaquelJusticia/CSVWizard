@@ -58,5 +58,18 @@ namespace CSVWizard.UnitTests
             Assert.That(result.First().First(), Is.EqualTo(o1));
             Assert.That(result.First().Skip(1).First(), Is.EqualTo(o2));
         }
+
+        [Test]
+        public void ShouldThrowColumnMismatchException()
+        {
+            //Arrange
+            const string fileName = "file";
+            var fileManager = new Mock<IFileManager>();
+            fileManager.Setup(f => f.ReadFile(fileName)).Returns(new List<string> { "a,b,c", "a,b" });
+            var csvManager = new CSVManager(fileManager.Object);
+
+            //Act && Assert
+            Assert.Throws<ColumnMismatchException>(() => csvManager.Load(fileName));
+        }
     }
 }
