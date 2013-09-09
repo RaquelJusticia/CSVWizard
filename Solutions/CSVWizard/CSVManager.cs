@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace CSVWizard
 {
@@ -33,23 +34,45 @@ namespace CSVWizard
         {
             var list = new List<object>();
             var elements = line.Split(',');
-            foreach (var element in elements)
+            for (int i = 0; i < elements.Length; i++)
             {
-                int intResult;
-                double doubleResult;
-                if (int.TryParse(element, out intResult))
+                var element = elements[i];
+                if (elements[i].StartsWith("\""))
                 {
-                    list.Add(intResult);
-                    continue;
+                    var elementBuilder = new StringBuilder(elements[i]);
+                    for (int j = i+1; j < elements.Length; j++)
+                    {
+                        i++;
+                        elementBuilder.Append(",").Append(elements[j]);
+                        if (elements[j].EndsWith("\""))
+                        {
+                            var elementString = elementBuilder.ToString();
+                            element = elementString.Substring(1, elementString.Length - 2).Replace("\"\"", "\"");
+                            break;
+                        }
+                    }
                 }
-                if (double.TryParse(element, out doubleResult))
-                {
-                    list.Add(doubleResult);
-                    continue;
-                }
-                list.Add(element);
+                
+                ParseElement(element, list);
             }
             totalList.Add(list);
+        }
+
+        private static void ParseElement(string element, List<object> list)
+        {
+            int intResult;
+            double doubleResult;
+            if (int.TryParse(element, out intResult))
+            {
+                list.Add(intResult);
+                return;
+            }
+            if (double.TryParse(element, out doubleResult))
+            {
+                list.Add(doubleResult);
+                return;
+            }
+            list.Add(element);
         }
     }
 }

@@ -39,6 +39,8 @@ namespace CSVWizard.UnitTests
         [TestCase("a,b", "a", "b")]
         [TestCase("a,1.8", "a", 1.8)]
         [TestCase("a,1", "a", 1)]
+        [TestCase("\"a,b\",c", "a,b", "c")]
+        [TestCase("\"\"\"a\"\", \"\"b\"\"\",c", "\"a\", \"b\"", "c")]
         public void ShouldParseCSV(string line, object o1, object o2)
         {
             //Arrange
