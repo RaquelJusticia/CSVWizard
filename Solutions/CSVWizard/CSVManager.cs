@@ -24,11 +24,6 @@ namespace CSVWizard
             }
             foreach (var line in lines)
             {
-                //if (line.Contains(",") == false)
-                //{
-                //    throw new InvalidOperationException();
-                //}
-
                 ProcessLine(line, totalList);
             }
 

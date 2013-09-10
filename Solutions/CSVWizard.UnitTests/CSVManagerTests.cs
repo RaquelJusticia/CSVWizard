@@ -23,19 +23,6 @@ namespace CSVWizard.UnitTests
             fileManager.Verify(f => f.ReadFile(fileName));
         }
 
-        [Ignore] 
-        public void ShouldThrowInvalidOperationExceptionIfIsNotCommaSeparated()
-        {
-            //Arrange
-            const string fileName = "file";
-            var fileManager = new Mock<IFileManager>();
-            fileManager.Setup(f => f.ReadFile(fileName)).Returns(new List<string>{"a.b.c"});
-            var csvManager = new CSVManager(fileManager.Object);
-
-            //Act && Assert
-            Assert.Throws<InvalidOperationException>(() => csvManager.Load(fileName));
-        }
-
         [TestCase("a,b", "a", "b")]
         [TestCase("a,1.8", "a", 1.8)]
         [TestCase("a,1", "a", 1)]
