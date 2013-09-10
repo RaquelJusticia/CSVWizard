@@ -18,12 +18,16 @@ namespace CSVWizard
         {
             var lines = _fileManager.ReadFile(fileName);
             var totalList = new List<List<object>>();
+            if (lines == null)
+            {
+                return null;
+            }
             foreach (var line in lines)
             {
-                if (line.Contains(",") == false)
-                {
-                    throw new InvalidOperationException();
-                }
+                //if (line.Contains(",") == false)
+                //{
+                //    throw new InvalidOperationException();
+                //}
 
                 ProcessLine(line, totalList);
             }
@@ -35,26 +39,35 @@ namespace CSVWizard
         {
             var list = new List<object>();
             var elements = line.Split(',');
-            for (int i = 0; i < elements.Length; i++)
+            list.Add(elements[0]);
+            if (elements.Count() > 1)
             {
-                var element = elements[i];
-                if (elements[i].StartsWith("\""))
+                list.Remove(elements[0]);
+                for (int i = 0; i < elements.Length; i++)
                 {
-                    var elementBuilder = new StringBuilder(elements[i]);
-                    for (int j = i+1; j < elements.Length; j++)
+                    var element = elements[i];
+                    if (elements[i].StartsWith("\"") && elements[i].EndsWith("\"\"\""))
                     {
-                        i++;
-                        elementBuilder.Append(",").Append(elements[j]);
-                        if (elements[j].EndsWith("\""))
+                        element = element.Substring(1, element.Length - 2).Replace("\"\"", "\"");
+                    }
+                    else if (elements[i].StartsWith("\""))
+                    {
+                        var elementBuilder = new StringBuilder(elements[i]);
+                        for (int j = i + 1; j < elements.Length; j++)
                         {
-                            var elementString = elementBuilder.ToString();
-                            element = elementString.Substring(1, elementString.Length - 2).Replace("\"\"", "\"");
-                            break;
+                            i++;
+                            elementBuilder.Append(",").Append(elements[j]);
+                            if (elements[j].EndsWith("\""))
+                            {
+                                var elementString = elementBuilder.ToString();
+                                element = elementString.Substring(1, elementString.Length - 2).Replace("\"\"", "\"");
+                                break;
+                            }
                         }
                     }
+
+                    ParseElement(element, list);
                 }
-                
-                ParseElement(element, list);
             }
             totalList.Add(list);
             CheckNumberOfColumns(totalList, list);
