@@ -34,16 +34,18 @@ namespace CSVWizard
         {
             var list = new List<object>();
             var elements = line.Split(',');
-            list.Add(elements[0]);
-            if (elements.Count() > 1)
+            if (elements.Count() == 1)
             {
-                list.Remove(elements[0]);
+                ParseElement(elements[0], list);
+            }
+            else 
+            {
                 for (int i = 0; i < elements.Length; i++)
                 {
                     var element = elements[i];
-                    if (elements[i].StartsWith("\"") && elements[i].EndsWith("\"\"\""))
+                    if (elements[i].StartsWith("\"") && elements[i].EndsWith("\""))
                     {
-                        element = element.Substring(1, element.Length - 2).Replace("\"\"", "\"");
+                        element = element.Substring(1, element.Length - 2);
                     }
                     else if (elements[i].StartsWith("\""))
                     {
@@ -55,7 +57,7 @@ namespace CSVWizard
                             if (elements[j].EndsWith("\""))
                             {
                                 var elementString = elementBuilder.ToString();
-                                element = elementString.Substring(1, elementString.Length - 2).Replace("\"\"", "\"");
+                                element = elementString.Substring(1, elementString.Length - 2);
                                 break;
                             }
                         }
@@ -71,18 +73,18 @@ namespace CSVWizard
         private static void ParseElement(string element, List<object> list)
         {
             int intResult;
-            double doubleResult;
             if (int.TryParse(element, out intResult))
             {
                 list.Add(intResult);
                 return;
             }
+            double doubleResult;
             if (double.TryParse(element, out doubleResult))
             {
                 list.Add(doubleResult);
                 return;
             }
-            list.Add(element);
+            list.Add(element.Replace("\"\"", "\""));
         }
 
         private static void CheckNumberOfColumns(List<List<object>> totalList, List<object> list)

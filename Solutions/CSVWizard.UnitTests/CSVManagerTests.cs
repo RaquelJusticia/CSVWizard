@@ -47,14 +47,14 @@ namespace CSVWizard.UnitTests
             Assert.That(result.First().Skip(1).First(), Is.EqualTo(o2));
         }
 
-        [Test]
-        public void ShouldParseCSVWhenOnlyOneColumn()
+        [TestCase("1.8", 1.8)]
+        [TestCase("\"\"\"\"", "\"\"")]
+        public void ShouldParseCSVWhenOnlyOneColumn(string element, object expectedElement)
         {
             //Arrange
             const string fileName = "file";
-            const string character = "1.8";
             var fileManager = new Mock<IFileManager>();
-            fileManager.Setup(f => f.ReadFile(fileName)).Returns(new List<string> { character });
+            fileManager.Setup(f => f.ReadFile(fileName)).Returns(new List<string> { element });
             var csvManager = new CSVManager(fileManager.Object);
 
             //Act
@@ -64,7 +64,7 @@ namespace CSVWizard.UnitTests
             //Assert
             Assert.That(result.Count(), Is.EqualTo(1));
             Assert.That(result.First().Count(), Is.EqualTo(1));
-            Assert.That(result.First().First(), Is.EqualTo(character));
+            Assert.That(result.First().First(), Is.EqualTo(expectedElement));
         }
 
         [Test]
