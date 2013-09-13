@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using System.Linq;
@@ -28,7 +27,12 @@ namespace CSVWizard.UnitTests
         [TestCase("a,1", "a", 1)]
         [TestCase("\"a,b\",c", "a,b", "c")]
         [TestCase("\"\"\"a\"\", \"\"b\"\"\",c", "\"a\", \"b\"", "c")]
+        [TestCase("\"\"\"a\"\"\",\"\"\"b\"\"\"", "\"a\"", "\"b\"")]
+        [TestCase("\",\",\"\"\"b\"\"\"", ",", "\"b\"")]
+        [TestCase("\"\"\"\",\"\"\"b\"\"\"", "\"","\"b\"")]
         [TestCase("\"\"\"a\"\".\"\"b\"\"\",c", "\"a\".\"b\"", "c")]
+        [TestCase("\"\"a, b", "\"a", " b")]
+        [TestCase("\"\"a\",b\"\"\"\"", "\"a\"", "b\"\"")]
         public void ShouldParseCSV(string line, object o1, object o2)
         {
             //Arrange
@@ -48,7 +52,8 @@ namespace CSVWizard.UnitTests
         }
 
         [TestCase("1.8", 1.8)]
-        [TestCase("\"\"\"\"", "\"\"")]
+        [TestCase("\"\"", "\"")]
+        [TestCase("\",\"", ",")]
         public void ShouldParseCSVWhenOnlyOneColumn(string element, object expectedElement)
         {
             //Arrange
@@ -60,7 +65,6 @@ namespace CSVWizard.UnitTests
             //Act
             var result = csvManager.Load(fileName);
 
-            //Assert
             //Assert
             Assert.That(result.Count(), Is.EqualTo(1));
             Assert.That(result.First().Count(), Is.EqualTo(1));

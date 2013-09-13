@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
@@ -17,11 +16,11 @@ namespace CSVWizard
         public IEnumerable<IEnumerable<object>> Load(string fileName)
         {
             var lines = _fileManager.ReadFile(fileName);
-            var totalList = new List<List<object>>();
             if (lines == null)
             {
                 return null;
             }
+            var totalList = new List<List<object>>();
             foreach (var line in lines)
             {
                 ProcessLine(line, totalList);
@@ -34,40 +33,53 @@ namespace CSVWizard
         {
             var list = new List<object>();
             var elements = line.Split(',');
-            if (elements.Count() == 1)
+
+            for (int i = 0; i < elements.Length; i++)
             {
-                ParseElement(elements[0], list);
-            }
-            else 
-            {
-                for (int i = 0; i < elements.Length; i++)
+                var element = elements[i];
+                if (elements[i].StartsWith("\""))
                 {
-                    var element = elements[i];
-                    if (elements[i].StartsWith("\"") && elements[i].EndsWith("\""))
+                    if (elements[i].EndsWith("\"") && elements[i].Count(e => e == '"') % 2 == 0)
                     {
-                        element = element.Substring(1, element.Length - 2);
-                    }
-                    else if (elements[i].StartsWith("\""))
-                    {
-                        var elementBuilder = new StringBuilder(elements[i]);
-                        for (int j = i + 1; j < elements.Length; j++)
+                        if (elements.Count() > 1)
                         {
-                            i++;
-                            elementBuilder.Append(",").Append(elements[j]);
-                            if (elements[j].EndsWith("\""))
-                            {
-                                var elementString = elementBuilder.ToString();
-                                element = elementString.Substring(1, elementString.Length - 2);
-                                break;
-                            }
+                            element = element.Substring(1, element.Length - 2);
                         }
                     }
-
-                    ParseElement(element, list);
+                    else 
+                    {
+                        element = TryLinkElements(elements, element, ref i);
+                    }
                 }
+
+                ParseElement(element, list);
             }
             totalList.Add(list);
             CheckNumberOfColumns(totalList, list);
+        }
+
+        private static string TryLinkElements(string[] elements, string element, ref int i)
+        {
+            var elementBuilder = new StringBuilder(elements[i]);
+            var completed = false;
+            var k = i;
+            for (int j = i + 1; j < elements.Length && !completed; j++)
+            {
+                k++;
+                elementBuilder.Append(",").Append(elements[j]);
+
+                if (elements[j].EndsWith("\"") && elements[j].Count(e => e == '"')%2 != 0)
+                {
+                    completed = true;
+                }
+            }
+            if (completed)
+            {
+                i = k;
+                element = elementBuilder.ToString();
+                element = element.Substring(1, element.Length - 2);
+            }
+            return element;
         }
 
         private static void ParseElement(string element, List<object> list)
