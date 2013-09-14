@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
@@ -13,14 +14,14 @@ namespace CSVWizard
             _fileManager = fileManager;
         }
 
-        public IEnumerable<IEnumerable<object>> Load(string fileName)
+        public IEnumerable<IEnumerable<T>> Load<T>(string fileName) where T : IComparable
         {
             var lines = _fileManager.ReadFile(fileName);
             if (lines == null)
             {
                 return null;
             }
-            var totalList = new List<List<object>>();
+            var totalList = new List<List<T>>();
             foreach (var line in lines)
             {
                 ProcessLine(line, totalList);
@@ -29,9 +30,9 @@ namespace CSVWizard
             return totalList;
         }
 
-        private static void ProcessLine(string line, List<List<object>> totalList)
+        private static void ProcessLine<T>(string line, List<List<T>> totalList)
         {
-            var list = new List<object>();
+            var list = new List<T>();
             var elements = line.Split(',');
 
             for (int i = 0; i < elements.Length; i++)
@@ -82,24 +83,37 @@ namespace CSVWizard
             return element;
         }
 
-        private static void ParseElement(string element, List<object> list)
+        private static void ParseElement<T>(string element, List<T> list)
         {
+
             int intResult;
-            if (int.TryParse(element, out intResult))
+            if (typeof(T) == typeof(int) && int.TryParse(element, out intResult))
             {
-                list.Add(intResult);
+                list.Add((T)(object)intResult);
                 return;
             }
             double doubleResult;
-            if (double.TryParse(element, out doubleResult))
+            if (typeof(T) == typeof(double) && double.TryParse(element, out doubleResult))
             {
-                list.Add(doubleResult);
+                list.Add((T)(object)doubleResult);
                 return;
             }
-            list.Add(element.Replace("\"\"", "\""));
+            DateTime dateTimeResult;
+            if (typeof(T) == typeof(DateTime) && DateTime.TryParse(element, out dateTimeResult))
+            {
+                list.Add((T)(object)dateTimeResult);
+                return;
+            }
+            char charResult;
+            if (typeof(T) == typeof(char) && char.TryParse(element, out charResult))
+            {
+                list.Add((T)(object)charResult);
+                return;
+            }
+            list.Add((T)(object)element.Replace("\"\"", "\""));
         }
 
-        private static void CheckNumberOfColumns(List<List<object>> totalList, List<object> list)
+        private static void CheckNumberOfColumns<T>(List<List<T>> totalList, List<T> list)
         {
             if (totalList.First().Count() != list.Count())
             {
