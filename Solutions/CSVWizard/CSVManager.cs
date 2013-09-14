@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace CSVWizard
 {
-    public class CSVManager
+    public class CSVManager : ICSVManager
     {
         private readonly IFileManager _fileManager;
 
