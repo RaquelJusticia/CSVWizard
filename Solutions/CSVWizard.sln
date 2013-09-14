@@ -14,6 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVWizard.UnitTests", "CSVW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVWizard", "CSVWizard\CSVWizard.csproj", "{C2B6548C-29F3-4056-815A-ED532CF687F9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specs", "Specs", "{B2902ADE-A390-465D-9AFE-8695B8BF038C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs.CSVWizard", "Specs.CSVWizard\Specs.CSVWizard.csproj", "{ECD573D8-9F2A-4052-AC3E-361F4E4FC52E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,11 +32,16 @@ Global
 		{C2B6548C-29F3-4056-815A-ED532CF687F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2B6548C-29F3-4056-815A-ED532CF687F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2B6548C-29F3-4056-815A-ED532CF687F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECD573D8-9F2A-4052-AC3E-361F4E4FC52E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECD573D8-9F2A-4052-AC3E-361F4E4FC52E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECD573D8-9F2A-4052-AC3E-361F4E4FC52E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECD573D8-9F2A-4052-AC3E-361F4E4FC52E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F6CE14AC-BBBA-4D73-833D-DFF0E7E603D5} = {EDC55D3B-6AAF-4DF0-93A2-AEFA10BEBD38}
+		{ECD573D8-9F2A-4052-AC3E-361F4E4FC52E} = {B2902ADE-A390-465D-9AFE-8695B8BF038C}
 	EndGlobalSection
 EndGlobal

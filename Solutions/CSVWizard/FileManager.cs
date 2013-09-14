@@ -3,7 +3,7 @@ using System.IO;
 
 namespace CSVWizard
 {
-    public class FileManager
+    public class FileManager : IFileManager
     {
         public IEnumerable<string> ReadFile(string fileName)
         {
